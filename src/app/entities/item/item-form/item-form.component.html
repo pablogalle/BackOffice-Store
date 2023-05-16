@@ -1,0 +1,74 @@
+<h1>Ficha de artículo</h1>
+
+{{ mode }} // {{ itemId }}
+
+<form *ngIf="item" #itemForm="ngForm" name="itemForm" role="form" novalidate autocomplete="off">
+
+    <!-- Id: solo visible si editamos (no editable) -->
+    <div class="form-group">
+        <label for="id">Id</label>
+        <input type="number" [(ngModel)]="item.id" name="id" class="form-control" id="id" #id="ngModel">
+    </div>
+
+    <!-- Categoria Id -->
+    <div class="form-group">
+        <label for="categoryId">Categoria</label>
+        <p-autoComplete [(ngModel)]="selectedCategory" name="selectedCategory" 
+        [suggestions]="categories" (completeMethod)="getAllCategories($event)" 
+        field="name" (onSelect)="categorySelected()" (onClear)="categoryUnselected()" 
+        [forceSelection]="true" [required]="true"></p-autoComplete>
+    </div>
+
+    <pre>
+        {{ selectedCategory | json }}
+    </pre>
+
+    <pre>
+        {{ item | json }}
+    </pre>
+
+    <!-- Nombre -->
+    <div class="form-group">
+        <label for="name">Nombre</label>
+        <input type="text" [(ngModel)]="item.name" name="name" class="form-control" id="name" #name="ngModel" required
+            minlength="3" maxlength="100">
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+        <label for="description">Descripción</label>
+        <input type="text" [(ngModel)]="item.description" name="description" class="form-control" id="description"
+            #desciption="ngModel" maxlength="2000">
+    </div>
+
+    <!-- Precio -->
+    <div class="form-group">
+        <label for="price">Precio</label>
+        <input type="number" [(ngModel)]="item.price" name="price" class="form-control" id="price" #price="ngModel"
+            required min="1">
+    </div>
+
+    <!-- Validación price -->
+    <div *ngIf="(price.dirty && price.errors)">
+        <small class="form-text text-danger" 
+        *ngIf="price.errors['required']">
+            Este campo es requerido
+        </small>
+        <small class="form-text text-danger"
+        *ngIf="price.errors['min']">
+            El valor debe ser positivo
+        </small>
+    </div>
+
+    <!-- Imagen -->
+    <div class="form-group">
+        <label for="imagen">Imagen (base64)</label>
+        <input type="file" id="image" class="form-control" id="image" (change)="includeImageInItem($event)">
+        <img *ngIf="item.image" [src]="'data:image/jpeg;base64,' + item.image">
+    </div>
+
+    <div class="buttonsForm">
+        <button (click)="saveItem()" [disabled]="itemForm.invalid" class="btn btn-primary">Guardar</button>
+    </div>
+
+</form>
