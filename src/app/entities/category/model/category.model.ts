@@ -5,7 +5,7 @@ export class Category {
     image?: string
 
     constructor(
-        id: number,
+        id: number | undefined,
         name: string,
         description?: string,
         image?: string

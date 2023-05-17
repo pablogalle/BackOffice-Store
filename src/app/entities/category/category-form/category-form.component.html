@@ -1,1 +1,44 @@
-<p>category-form works!</p>
+<h1>Ficha de Categoria</h1>
+
+<form *ngIf="categoryForm" [formGroup]="categoryForm!" novalidate autocomplete="off">
+
+    <div class="form-group">
+        <label for="id">Id</label>
+        <input type="number" class="form-control" id="id" formControlName="id">
+    </div>
+
+    <!-- Nombre -->
+    <div class="form-group">
+        <label for="name">Nombre</label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+    </div>
+
+    <div *ngIf="(categoryForm.get('name')!.dirty && categoryForm.get('name')!.errors)">
+        <small class="form-text text-danger"
+        *ngIf="categoryForm.get('name')!.errors!['required']">
+            Este campo es requerido
+        </small>
+        <small class="form-text text-danger"
+        *ngIf="categoryForm.get('name')!.errors!['minlength']">
+            Este campo tiene que tener una longitud mínima de 3 caracteres
+        </small>
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+        <label for="description">Descripción</label>
+        <input type="text" formControlName="description" class="form-control" id="description">
+    </div>
+
+    <!-- Imagen -->
+    <div class="form-group">
+        <label for="imagen">Imagen (base64)</label>
+        <input type="file" id="image" class="form-control" (change)="includeImageInCategory($event)">
+        <img *ngIf="category?.image" [src]="'data:image/jpeg;base64,' + category!.image">
+    </div>
+
+    <div class="buttonsForm">
+        <button (click)="saveCategory()" [disabled]="categoryForm.invalid" class="btn btn-primary">Guardar</button>
+    </div>
+
+</form>

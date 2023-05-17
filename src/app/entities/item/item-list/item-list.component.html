@@ -2,7 +2,6 @@
 
 <form>
     <div class="row">
-
         <!-- Name -->
         <div class="form-group" class="col-12 col-md-6">
             <label for="name">Nombre</label>
@@ -16,13 +15,12 @@
 
         <div class="col-12 col-md-3">
             <button id="btnSearch" class="btn btn-secondary" (click)="searchByFilters()">Buscar</button>
+            <button class="btn btn-success" [routerLink]="['/items','new']"><i class="pi pi-plus"></i></button>
+            
         </div>
     </div>
 </form>
 
-<div id="buttonCreateContainer">
-    <button class="btn btn-success" [routerLink]="['/items','new']">Nuevo articulo</button>
-</div>
 
 <table *ngIf="items.length > 0">
     <thead>
@@ -41,10 +39,11 @@
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
 
-            <td> 
-                <button class="btn btn-secondary" id="btnEditCategory" [routerLink]="['/items',item.id]"> Editar</button>
-                <button class="btn btn-secondary" id="btnDeleteCategory" data-bs-toggle="modal" data-bs-target="#askConfirmationDelete" 
-                (click)="prepareItemToDelete(item.id!)"> Eliminar</button>
+            <td>
+                <button class="btn btn-secondary" id="btnEditItem" [routerLink]="['/items',item.id]">
+                    Editar</button>
+                <button class="btn btn-secondary" id="btnDeleteItem" data-bs-toggle="modal"
+                    data-bs-target="#askConfirmationDelete" (click)="prepareItemToDelete(item.id!)"> Eliminar</button>
             </td>
         </tr>
     </tbody>
@@ -56,20 +55,22 @@
     <button [disabled]="last" class="btn btn-secondary btnSiguiente" (click)="nextPage()">Siguiente</button>
 </div>
 
-<div class="modal fade" id="askConfirmationDelete" tabindex="-1" aria-labelledby="askConfirmationDelete" aria-hidden="true">
+<div class="modal fade" id="askConfirmationDelete" tabindex="-1" aria-labelledby="askConfirmationDelete"
+    aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title" id="exampleModalLabel">Confirmación de borrado</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel">Confirmación de borrado</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Desea eliminar el registro seleccionado? Esta operación no puede deshacerse
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    (click)="deleteItem()">Eliminar</button>
+            </div>
         </div>
-        <div class="modal-body">
-          ¿Desea eliminar el registro seleccionado? Esta operación no puede deshacerse
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="deleteItem()">Eliminar</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>

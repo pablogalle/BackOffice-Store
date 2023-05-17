@@ -79,11 +79,11 @@ export class ItemReactiveFormComponent implements OnInit {
   saveItem() {
     const itemToSave: Item = this.createFromForm();
     if (this.mode === "NEW") {
-      this.insertItem();
+      this.insertItem(itemToSave);
     }
 
     if (this.mode === "UPDATE") {
-      this.updateItem();
+      this.updateItem(itemToSave);
     }
   }
 
@@ -99,16 +99,6 @@ export class ItemReactiveFormComponent implements OnInit {
       categoryName: this.itemForm?.get(['category'])!.value.name,
 
     }
-  }
-
-  categorySelected() {
-    this.item!.categoryId = this.selectedCategory!.id;
-    this.item!.categoryName = this.selectedCategory!.name;
-  }
-
-  categoryUnselected() {
-    this.item!.categoryId = undefined;
-    this.item!.categoryName = undefined;
   }
 
   includeImageInItem(event: any) {
@@ -157,8 +147,8 @@ export class ItemReactiveFormComponent implements OnInit {
     })
   }
 
-  private insertItem() {
-    this.itemService.insertItem(this.item!).subscribe({
+  private insertItem(item: Item) {
+    this.itemService.insertItem(item).subscribe({
       next: (itemInserted) => {
         console.log("Insertado correcetamente");
         console.log(itemInserted)
@@ -167,8 +157,8 @@ export class ItemReactiveFormComponent implements OnInit {
     })
   }
 
-  private updateItem() {
-    this.itemService.updateItem(this.item!).subscribe({
+  private updateItem(item: Item) {
+    this.itemService.updateItem(item).subscribe({
       next: (itemUpdated) => {
         console.log("Modificado correcetamente");
         console.log(itemUpdated)

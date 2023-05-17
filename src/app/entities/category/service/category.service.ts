@@ -17,5 +17,26 @@ export class CategoryService {
     }
     return this.http.get<Category[]>(urlEndpoint);
   }
+
+  getCategoryById(categoryId: number): Observable<Category> {
+    let urlEndpoint: string = "http://localhost:8080/store/categories/" + categoryId;
+    return this.http.get<Category>(urlEndpoint);
+  }
+
+  insertCategory(category: Category): Observable<Category> {
+    let urlEndpoint: string = "http://localhost:8080/store/categories/";
+    return this.http.post<Category>(urlEndpoint, category);
+  }
+
+  deleteCategory(categoryIdToDelete: number): Observable<any> {
+    let urlEndpoint: string = "http://localhost:8080/store/categories/" + categoryIdToDelete;
+    return this.http.delete<any>(urlEndpoint);
+  }
+
+  updateCategory(category: Category): Observable<Category> {
+    let urlEndpoint: string = "http://localhost:8080/store/categories/";
+    return this.http.patch<Category>(urlEndpoint, category);
+  }
+
   
 }

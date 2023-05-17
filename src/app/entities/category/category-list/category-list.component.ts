@@ -7,22 +7,37 @@ import { CategoryService } from '../service/category.service';
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss']
 })
-export class CategoryListComponent implements OnInit{
+export class CategoryListComponent implements OnInit {
+
+  categoryIdToDelete?: number;
 
   categories: Category[] = [];
 
-  constructor(private categoryService: CategoryService){}
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.getCategories();
-    
+
   }
 
-  getCategories() : void{
+  getCategories(): void {
     this.categoryService.getAllCategories().subscribe({
-      next: (categoriesRequest) => {this.categories = categoriesRequest;},
+      next: (categoriesRequest) => { this.categories = categoriesRequest; },
       error: (err) => this.handleError(err)
     })
+  }
+
+  deleteCategory() {
+    this.categoryService.deleteCategory(this.categoryIdToDelete!).subscribe({
+      next: (data) => {
+        this.getCategories();
+      },
+      error: (err) => { this.handleError(err) }
+    })
+  }
+
+  prepareCategoryToDelete(categoryId: number) {
+    this.categoryIdToDelete = categoryId;
   }
 
   handleError(err: any): void {
