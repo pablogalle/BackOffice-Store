@@ -1,0 +1,61 @@
+<h1>Ficha de artículo</h1>
+
+{{ mode }} // {{ itemId }}
+
+<form *ngIf="itemForm"[formGroup]="itemForm!" novalidate autocomplete="off">
+
+    <div class="form-group">
+        <label for="id">Id</label>
+        <input type="number" class="form-control" id="id" formControlName="id">
+    </div>
+
+    <!-- Categoria Id -->
+    <div class="form-group">
+        <label for="categoryId">Categoria</label>
+        <p-autoComplete formControlName="category" name="category" 
+        [suggestions]="categories" (completeMethod)="getAllCategories($event)" 
+        field="name" (onSelect)="categorySelected()" (onClear)="categoryUnselected()" 
+        [forceSelection]="true" [required]="true"></p-autoComplete>
+    </div>
+
+    <!-- Nombre -->
+    <div class="form-group">
+        <label for="name">Nombre</label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+    </div>
+
+    <div *ngIf="(itemForm.get('name')!.dirty && itemForm.get('name')!.errors)">
+        <small class="form-text text-danger"
+        *ngIf="itemForm.get('name')!.errors!['required']">
+            Este campo es requerido
+        </small>
+        <small class="form-text text-danger"
+        *ngIf="itemForm.get('name')!.errors!['minlength']">
+            Este campo tiene que tener una longitud mínima de 3 caracteres
+        </small>
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+        <label for="description">Descripción</label>
+        <input type="text" formControlName="description" class="form-control" id="description">
+    </div>
+
+    <!-- Precio -->
+    <div class="form-group">
+        <label for="price">Precio</label>
+        <input type="number" formControlName="price" class="form-control" id="price">
+    </div>
+
+    <!-- Imagen -->
+    <div class="form-group">
+        <label for="imagen">Imagen (base64)</label>
+        <input type="file" id="image" class="form-control" (change)="includeImageInItem($event)">
+        <img *ngIf="item!.image" [src]="'data:image/jpeg;base64,' + item!.image">
+    </div>
+
+    <div class="buttonsForm">
+        <button (click)="saveItem()" [disabled]="itemForm.invalid" class="btn btn-primary">Guardar</button>
+    </div>
+
+</form>
