@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ItemService } from '../service/item.service';
 import { Item } from '../modelo/item.model';
 import { filter } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-item-list',
@@ -17,7 +18,7 @@ export class ItemListComponent implements OnInit {
   items: Item[] = [];
 
   page: number = 0;
-  size: number = 25;
+  size: number = 2;
   sort: string = "name,asc";
 
   first: boolean = false;
@@ -32,7 +33,8 @@ export class ItemListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private itemService: ItemService) { }
+    private itemService: ItemService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     if (this.route.snapshot.paramMap.get("categoryId")) {
@@ -91,6 +93,7 @@ export class ItemListComponent implements OnInit {
 
   handleError(err: any): void {
     // lo que hariamos si hubiera un error 
+    
   }
 
   nextPage() {
@@ -115,9 +118,15 @@ export class ItemListComponent implements OnInit {
   public deleteItem(){
     this.itemService.deleteItem(this.itemIdToDelete!).subscribe({
       next: (data) => {
+        this.showInfoMessage('Articulo Borrado', 'El articulo con id '+this.itemIdToDelete+' ha sido borrado')
         this.getAllItems();
+        
       },
       error: (err) => {this.handleError(err)}
     })
+  }
+
+  showInfoMessage(summary:string, detail: string) {
+    this.messageService.add({ severity: 'info', summary: summary, detail: detail });
   }
 }

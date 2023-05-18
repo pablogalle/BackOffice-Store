@@ -18,7 +18,8 @@ import { ItemReactiveFormComponent } from './entities/item/item-reactive-form/it
 import { HttpRequestIntercept } from './config/interceptors/http-request-interceptor.interceptor';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
-
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -39,14 +40,16 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ToastModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpRequestIntercept,
       multi: true
-    }
+    },
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

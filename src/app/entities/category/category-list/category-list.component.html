@@ -16,11 +16,11 @@
             <td>{{ category.name }}</td>
             <td>
                 <a [routerLink]="['/categories', category.id, 'items']">
-                    <button id="btnNavToCategoryItems" class="btn btn-secondary"> Articulos</button>
+                    <button id="btnNavToCategoryItems" class="btn btn-primary"> <i class="pi pi-list"></i></button>
                 </a>
-                <button id="btnEditCategory" class="btn btn-secondary" [routerLink]="['/categories', category.id]"> Editar</button>
-                <button class="btn btn-secondary" id="btnDeleteCategory" data-bs-toggle="modal"
-                    data-bs-target="#askConfirmationDelete" (click)="prepareCategoryToDelete(category.id!)"> Eliminar</button>
+                <button id="btnEditCategory" class="btn btn-warning" [routerLink]="['/categories', category.id]"> <i class="pi pi-pencil"></i></button>
+                <button class="btn btn-danger" id="btnDeleteCategory" data-bs-toggle="modal"
+                    data-bs-target="#askConfirmationDelete" (click)="prepareCategoryToDelete(category.id!)"> <i class="pi pi-trash"></i></button>
             </td>
         </tr>
     </tbody>

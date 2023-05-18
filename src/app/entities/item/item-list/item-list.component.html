@@ -14,8 +14,8 @@
         </div>
 
         <div class="col-12 col-md-3">
-            <button id="btnSearch" class="btn btn-secondary" (click)="searchByFilters()">Buscar</button>
-            <button class="btn btn-success" [routerLink]="['/items','new']"><i class="pi pi-plus"></i></button>
+            <button id="btnSearch" class="btn btn-secondary" (click)="searchByFilters()">Filtrar <i class="pi pi-filter"></i></button>
+            <button class="btn btn-success" [routerLink]="['/items','new']">Nuevo Articulo <i class="pi pi-plus"></i></button>
             
         </div>
     </div>
@@ -37,13 +37,13 @@
                 <img class="imgItem" [src]="'data:image/webp;base64,'+item.image" alt="">
             </td>
             <td>{{ item.name }}</td>
-            <td>{{ item.price }}</td>
+            <td>{{ item.price | currency:'EUR'}}</td>
 
             <td>
-                <button class="btn btn-secondary" id="btnEditItem" [routerLink]="['/items',item.id]">
-                    Editar</button>
-                <button class="btn btn-secondary" id="btnDeleteItem" data-bs-toggle="modal"
-                    data-bs-target="#askConfirmationDelete" (click)="prepareItemToDelete(item.id!)"> Eliminar</button>
+                <button class="btn btn-warning" id="btnEditItem" [routerLink]="['/items',item.id]">
+                    <i class="pi pi-pencil"></i></button>
+                <button class="btn btn-danger" id="btnDeleteItem" data-bs-toggle="modal"
+                    data-bs-target="#askConfirmationDelete" (click)="prepareItemToDelete(item.id!)"><i class="pi pi-trash"></i></button>
             </td>
         </tr>
     </tbody>
@@ -55,20 +55,21 @@
     <button [disabled]="last" class="btn btn-secondary btnSiguiente" (click)="nextPage()">Siguiente</button>
 </div>
 
+<p-toast></p-toast>
+
 <div class="modal fade" id="askConfirmationDelete" tabindex="-1" aria-labelledby="askConfirmationDelete"
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title" id="exampleModalLabel">Confirmación de borrado</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 ¿Desea eliminar el registro seleccionado? Esta operación no puede deshacerse
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
                     (click)="deleteItem()">Eliminar</button>
             </div>
         </div>

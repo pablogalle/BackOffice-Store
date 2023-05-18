@@ -5,6 +5,8 @@ import { CategoryService } from '../../category/service/category.service';
 import { Item } from '../modelo/item.model';
 import { ItemService } from '../service/item.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-item-reactive-form',
@@ -25,7 +27,9 @@ export class ItemReactiveFormComponent implements OnInit {
     private route: ActivatedRoute,
     private itemService: ItemService,
     private categoryService: CategoryService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private messageService: MessageService) {
+    }
 
   ngOnInit(): void {
 
@@ -151,7 +155,7 @@ export class ItemReactiveFormComponent implements OnInit {
     this.itemService.insertItem(item).subscribe({
       next: (itemInserted) => {
         console.log("Insertado correcetamente");
-        console.log(itemInserted)
+        this.showSuccessMessage('Artículo Creado', item.name+' creado correctamente')
       },
       error: (err) => { this.handleError(err) }
     })
@@ -161,7 +165,8 @@ export class ItemReactiveFormComponent implements OnInit {
     this.itemService.updateItem(item).subscribe({
       next: (itemUpdated) => {
         console.log("Modificado correcetamente");
-        console.log(itemUpdated)
+        this.showSuccessMessage('Artículo Modificado', item.name+' actualizado correctamente')
+
       },
       error: (err) => { this.handleError(err) }
     })
@@ -178,6 +183,9 @@ export class ItemReactiveFormComponent implements OnInit {
     });
   }
 
+  showSuccessMessage(summary:string, detail: string) {
+    this.messageService.add({ severity: 'success', summary: summary, detail: detail });
+  }
 
 
   handleError(err: any) {
