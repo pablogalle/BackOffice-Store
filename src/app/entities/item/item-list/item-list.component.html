@@ -16,7 +16,6 @@
         <div class="col-12 col-md-3">
             <button id="btnSearch" class="btn btn-secondary" (click)="searchByFilters()">Filtrar <i class="pi pi-filter"></i></button>
             <button class="btn btn-success" [routerLink]="['/items','new']">Nuevo Articulo <i class="pi pi-plus"></i></button>
-            
         </div>
     </div>
 </form>
@@ -27,6 +26,7 @@
         <th>Id</th>
         <th>Imagen</th>
         <th>Articulo</th>
+        <th>Categoría</th>
         <th>Precio</th>
         <th>Acciones</th>
     </thead>
@@ -37,6 +37,7 @@
                 <img class="imgItem" [src]="'data:image/webp;base64,'+item.image" alt="">
             </td>
             <td>{{ item.name }}</td>
+            <td>{{item.categoryName}}</td>
             <td>{{ item.price | currency:'EUR'}}</td>
 
             <td>

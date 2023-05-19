@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../model/category.model';
 import { CategoryService } from '../service/category.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-category-list',
@@ -13,7 +14,8 @@ export class CategoryListComponent implements OnInit {
 
   categories: Category[] = [];
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -30,6 +32,7 @@ export class CategoryListComponent implements OnInit {
   deleteCategory() {
     this.categoryService.deleteCategory(this.categoryIdToDelete!).subscribe({
       next: (data) => {
+        this.showInfoMessage('Categoría Eliminada', 'La categoría con id '+this.categoryIdToDelete+' ha sido borrada')
         this.getCategories();
       },
       error: (err) => { this.handleError(err) }
@@ -38,6 +41,10 @@ export class CategoryListComponent implements OnInit {
 
   prepareCategoryToDelete(categoryId: number) {
     this.categoryIdToDelete = categoryId;
+  }
+
+  showInfoMessage(summary:string, detail: string) {
+    this.messageService.add({ severity: 'info', summary: summary, detail: detail });
   }
 
   handleError(err: any): void {

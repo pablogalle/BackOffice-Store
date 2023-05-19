@@ -52,7 +52,6 @@ export class ItemListComponent implements OnInit {
     if(this.categoryId){
       filters.push("category.id:EQUAL:" + this.categoryId)
     }
-
     if (this.nameFilter) {
       filters.push("name:MATCH:" + this.nameFilter);
     }

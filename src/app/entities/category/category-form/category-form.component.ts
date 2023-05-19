@@ -3,6 +3,7 @@ import { Category } from '../model/category.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from '../service/category.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-category-form',
@@ -19,7 +20,8 @@ export class CategoryFormComponent {
   constructor(
     private route: ActivatedRoute,
     private categoryService: CategoryService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
 
@@ -124,7 +126,7 @@ export class CategoryFormComponent {
   private insertCategory(category: Category) {
     this.categoryService.insertCategory(category).subscribe({
       next: (categoryInserted) => {
-        console.log("Insertado correcetamente");
+        this.showSuccessMessage('Categoría Insertada', categoryInserted.name+' insertada correctamente')
         console.log(categoryInserted)
       },
       error: (err) => { this.handleError(err) }
@@ -135,7 +137,7 @@ export class CategoryFormComponent {
     console.log(this.category)
     this.categoryService.updateCategory(category).subscribe({
       next: (categoryUpdated) => {
-        console.log("Modificado correcetamente");
+        this.showSuccessMessage('Categoría Modificada', categoryUpdated.name+' actualizada correctamente')
         console.log(categoryUpdated)
       },
       error: (err) => { this.handleError(err) }
@@ -152,7 +154,9 @@ export class CategoryFormComponent {
     });
   }
 
-
+  showSuccessMessage(summary:string, detail: string) {
+    this.messageService.add({ severity: 'success', summary: summary, detail: detail });
+  }
 
   handleError(err: any) {
     //ToDo

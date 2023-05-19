@@ -1,10 +1,18 @@
-<h1>Lista de Categorias</h1>
+<div class="row">
+    <div class="col-12 col-md-6 ">
+        <h1>Lista de Categorías</h1>
+    </div>
+    <div class="col-12 col-md-6 btn-add">
+        <button class="btn btn-success" [routerLink]="['/categories','new']">Nueva Categoría <i class="pi pi-plus"></i></button>
+    </div>
+</div>
 
 <table *ngIf="categories.length > 0">
     <thead>
         <th>Id</th>
         <th>Imagen</th>
         <th>Categoria</th>
+        <th>Descripción</th>
         <th>Acciones</th>
     </thead>
     <tbody>
@@ -13,18 +21,23 @@
             <td>
                 <img class="imgCategory" [src]="'data:image/webp;base64,'+category.image" alt="">
             </td>
-            <td>{{ category.name }}</td>
+            <td> {{ category.name }}</td>
+            <td> {{category.description}}</td>
             <td>
                 <a [routerLink]="['/categories', category.id, 'items']">
                     <button id="btnNavToCategoryItems" class="btn btn-primary"> <i class="pi pi-list"></i></button>
                 </a>
-                <button id="btnEditCategory" class="btn btn-warning" [routerLink]="['/categories', category.id]"> <i class="pi pi-pencil"></i></button>
+                <button id="btnEditCategory" class="btn btn-warning" [routerLink]="['/categories', category.id]"> <i
+                        class="pi pi-pencil"></i></button>
                 <button class="btn btn-danger" id="btnDeleteCategory" data-bs-toggle="modal"
-                    data-bs-target="#askConfirmationDelete" (click)="prepareCategoryToDelete(category.id!)"> <i class="pi pi-trash"></i></button>
+                    data-bs-target="#askConfirmationDelete" (click)="prepareCategoryToDelete(category.id!)"> <i
+                        class="pi pi-trash"></i></button>
             </td>
         </tr>
     </tbody>
 </table>
+
+<p-toast></p-toast>
 
 <div class="modal fade" id="askConfirmationDelete" tabindex="-1" aria-labelledby="askConfirmationDelete"
     aria-hidden="true">
